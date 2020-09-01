@@ -1,0 +1,53 @@
+{% extends "base_generic.html" %}
+
+{% block login %}
+  {% if user.is_authenticated == False %} 
+  <li class="nav-item active">
+    <a class="nav-link" href="{% url 'login' %}">Sign In/Sign Up</a>
+  </li>
+  {% else %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
+  </li>
+  {% endif %}
+{% endblock %}
+
+{% block container %}
+<h1>{{response}}</h1>
+{% if next %}
+  {% if user.is_authenticated %}
+  <div class="w-50" style="margin: 0 auto">
+    <h1>Congruts! You're already logged!</h1>
+  </div>
+  {% else %}
+  <div class="w-50" style="margin: 0 auto">
+    <h1>Please login or sign up!</h1>
+  </div>
+  {% endif %}
+{% endif %}
+<div class="w-50" style="margin: 0 auto">
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <h1>Login</h1>
+    <div class="form-group">
+      {% for field in form %}
+      {{ field.label_tag }}
+      <input type="{% if field.html_name == 'username' %}text{% else %}password{% endif %}" name="{{ field.html_name }}" class="form-control mt-2 mb-2" id="{{ field.id_for_label }}" aria-describedby="usernameHelp"
+        placeholder="Enter {{ field.html_name }}" required>
+      {% if field.html_name == 'username' %}
+        <small id="usernameHelp" class="form-text text-muted mt-2 mb-2">We'll never share your data with anyone else.</small>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+  <div class="d-flex flex-row justify-content-between w-100 pt-3">
+    <a href="{% url 'password_reset' %}">Lost Password?</a>
+    <a href="{% url 'index' %}">Create An Account</a>
+  </div>
+  {% if form.errors %}
+    <p style="color: red">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+</div>
+{% endblock %}

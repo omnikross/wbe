@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+
+{% block container %}
+
+<div class="text-left d-flex flex-flow-column">
+    <div class="w-25">
+        <div class="card-footer d-flex justify-content-center">
+            <h4>{{ director.first_name }} {{ director.last_name }}</h4>
+        </div>
+        <div class="text-center">
+            <img src="{{ director.get_img_path }}" class="rounded w-100"
+                alt="{{ director.first_name }} {{ director.last_name }} img">
+        </div>
+    </div>
+    <div class="card w-75" style="max-width: 100%;">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Born</strong>: {{ director.date_of_birth }}
+                {% if director.date_of_death != null %}, <strong>Death</strong>: {{ director.date_of_death }} {% else %}
+                {% endif %} </a></li>
+        </ul>
+        <h4 class="title text-center">Films in our library</h4>
+
+        {% if films_data %}
+        <div class="row">
+            {% for film in films_data %}
+                {% if film.director.id == director.id %}
+                    <div class="col-sm-3">
+                        <div class="card w-100">
+                            <img class="card-img-top" src="{{ film.get_img_path }}" alt="{{ film.title }} img">
+                            <div class="card-body">
+                                <h4 class="card-title"> {{ film.title }} </h4>
+                                <p class="card-text"> {{ film.get_short_summary }}</p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-center">
+                                <a href="{{ film.get_absolute_url }}" class="btn btn-light  my-2 my-sm-0">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>There are no Films in the library.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

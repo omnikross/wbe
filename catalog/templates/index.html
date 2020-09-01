@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+
+{% block container %}
+<header class="jumbotron my-4">
+  <h6>{{user}}</h6>
+  <h1 class="display-3">Welcome to our Cinema</h1>
+  <p class="lead">Here you can choose a movie for your evening viewing. We suggest you follow the link and watch all the
+    films available to you.</p>
+  <a href="{% url 'films' %}" class="btn btn-primary btn-lg">View!</a>
+</header>
+
+{% endblock %}

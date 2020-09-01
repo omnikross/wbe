@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+{% block directors %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'directors' %}">Directors</a>
+</li>
+{% endblock %}
+
+{% block container %}
+{% if director_list %}
+<div class="row">
+    {% for director in director_list %}
+    <div class="col-sm-3">
+        <div class="card w-100">
+            <img class="card-img-top" src="{{ director.get_img_path }}" alt="{{ director.first_name }} {{ director.last_name }} img">
+            <div class="card-body">
+                <h4 class="card-title"> {{ director.first_name }} {{ director.last_name }} </h4>
+                <h6 class="card-title"> 
+                    {{ director.date_of_birth }}
+                        {% if director.date_of_death != null %} - {{ director.date_of_death }} {% else %}
+                    {% endif %}  
+                </h6>
+                    {% if film_list %}
+                    <p class="card-text"> {{ film.title }}</p>
+                    {% for film in film_list %}
+                        {% ifequal film.director.id director.id %}
+                        {% endifequal %}
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <a href="{{ director.get_absolute_url }}" class="btn btn-light  my-2 my-sm-0">Read More</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

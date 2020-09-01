@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+
+{% block available %}
+<li class="nav-item">
+    <a class="nav-link active" href="{% url 'available' %}">Available Now</a>
+</li>
+{% endblock %}
+
+{% block container %}
+
+{% if filminstance_list %}
+<div class="row">
+    {% for film in filminstance_list %}
+        <div class="col-sm-3">
+            <div class="card w-100">
+                <img class="card-img-top" src="{{ film.film.get_img_path }}" alt="{{ film.film.title }} img">
+                <div class="card-body">
+                    <h4 class="card-title"> {{ film.film.title }} </h4>
+                    <h6 class="card-title"> {{ film.film.director }} </h6>
+                    <h6 class="card-title"> Available Till: {{ film.session_time }} </h6>
+                    <p class="card-text"> {{ film.film.get_short_summary }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-center">
+                    <a href="{{ film.film.get_absolute_url }}" class="btn btn-light  my-2 my-sm-0">Read More</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<p>There are no Films in the library.</p>
+{% endif %}
+{% endblock %}
