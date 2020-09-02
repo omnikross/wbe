@@ -48,11 +48,11 @@
         {% block login %}
           {% if user.is_authenticated == False %} 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Sign In/Sign Up</a>
+            <a class="nav-link" href="{% url 'index' %}">Sign In/Sign Up</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
+            <a class="nav-link" href="{% url 'index' %}">Sign Out</a>
           </li>
           {% endif %}
         {% endblock %}
